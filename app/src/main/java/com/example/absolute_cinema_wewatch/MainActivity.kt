@@ -2,7 +2,10 @@ package com.example.absolute_cinema_wewatch
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var moviesRecyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
     private lateinit var noMoviesLayout: LinearLayout
+    private var adapter: MainAdapter? = null
 
     private lateinit var dataSource: LocalDataSource
     private val compositeDisposable = CompositeDisposable()
@@ -76,5 +80,27 @@ class MainActivity : AppCompatActivity() {
         override fun onComplete() {
             Log.d(TAG, "@string/completed")
         }
+    }
+
+    fun displayMovies(movieList: List<Movie>?) {
+        if (movieList.isNullOrEmpty()) {
+            Log.d(TAG, "No movies to display")
+            moviesRecyclerView.visibility = INVISIBLE
+            noMoviesLayout.visibility = VISIBLE
+        } else {
+            adapter = MainAdapter(movieList, this@MainActivity)
+            moviesRecyclerView.adapter = adapter
+
+            moviesRecyclerView.visibility = VISIBLE
+            noMoviesLayout.visibility = INVISIBLE
+        }
+    }
+
+    fun showToast(str: String) {
+        Toast.makeText(this@MainActivity, str, Toast.LENGTH_LONG).show()
+    }
+
+    fun displayError(e: String) {
+        showToast(e)
     }
 }

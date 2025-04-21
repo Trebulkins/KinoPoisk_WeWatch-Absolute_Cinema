@@ -3,5 +3,7 @@
     <string name="movies_to_watch">Фильмы для просмотра</string>
     <string name="fab_text">Floating Action button</string>
     <string name="no_movies_text">Фильмы не найдены!</string>
+    <string name="error_fetching_movie_list">Не удалось получить список фильмов</string>
+    <string name="completed">Завершено</string>
     <string name="zero_movies_text">В вашем списке сейчас 0 фильмов. Нажмите на кнопку снизу и добавьте фильм!</string>
 </resources>
