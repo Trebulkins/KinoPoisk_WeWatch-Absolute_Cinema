@@ -33,7 +33,7 @@
             android:layout_gravity="center"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text="@strings/zero_movies_text"
+            android:text="@string/zero_movies_text"
             android:textAlignment="center" />
 
     </LinearLayout>

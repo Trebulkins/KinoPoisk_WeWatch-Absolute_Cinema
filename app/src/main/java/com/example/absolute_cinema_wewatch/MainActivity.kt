@@ -17,6 +17,8 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MainActivity"
+
     private lateinit var moviesRecyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
     private lateinit var noMoviesLayout: LinearLayout
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         moviesRecyclerView.layoutManager = LinearLayoutManager(this)
         fab = findViewById(R.id.fab)
         noMoviesLayout = findViewById(R.id.no_movies_layout)
-        supportActionBar?.title = "@strings/movies_to_watch"
+        supportActionBar?.title = "@string/movies_to_watch"
     }
 
     override fun onStart() {
@@ -68,11 +70,11 @@ class MainActivity : AppCompatActivity() {
         override fun onError(@NonNull e: Throwable) {
             Log.d(TAG, "Error$e")
             e.printStackTrace()
-            displayError("Error fetching movie list")
+            displayError("@string/error_fetching_movie_list")
         }
 
         override fun onComplete() {
-            Log.d(TAG, "Completed")
+            Log.d(TAG, "@string/completed")
         }
     }
 }
