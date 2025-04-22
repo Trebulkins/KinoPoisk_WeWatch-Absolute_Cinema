@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sample.wewatch.model.Movie
-import com.sample.wewatch.network.RetrofitClient
+import com.example.absolute_cinema_wewatch.api.RetrofitClient
+import com.example.absolute_cinema_wewatch.database.Movie
 import com.squareup.picasso.Picasso
 
 
