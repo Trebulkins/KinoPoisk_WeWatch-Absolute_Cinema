@@ -1,5 +1,6 @@
 package com.example.absolute_cinema_wewatch
 
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -8,10 +9,14 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.absolute_cinema_wewatch.database.LocalDataSource
+import com.example.absolute_cinema_wewatch.database.Movie
+import com.example.absolute_cinema_wewatch.api.RetrofitClient.TMDB_BASE_URL
+
 import com.squareup.picasso.Picasso
 
-open class AddMovieActivity {
+open class AddMovieActivity : AppCompatActivity() {
     private lateinit var titleEditText: EditText
     private lateinit var releaseDateEditText: EditText
     private lateinit var movieImageView: ImageView

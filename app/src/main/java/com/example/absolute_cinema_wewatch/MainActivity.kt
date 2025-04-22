@@ -111,4 +111,8 @@ class MainActivity : AppCompatActivity() {
     fun displayError(e: String) {
         showToast(e)
     }
+
+    companion object {
+        const val ADD_MOVIE_ACTIVITY_REQUEST_CODE = 1
+    }
 }
