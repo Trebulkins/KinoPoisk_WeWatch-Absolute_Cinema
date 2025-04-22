@@ -1,7 +1,9 @@
 package com.example.absolute_cinema_wewatch
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.LinearLayout
@@ -37,14 +39,6 @@ class MainActivity : AppCompatActivity() {
         setupViews()
     }
 
-    private fun setupViews() {
-        moviesRecyclerView = findViewById(R.id.movies_recyclerview)
-        moviesRecyclerView.layoutManager = LinearLayoutManager(this)
-        fab = findViewById(R.id.fab)
-        noMoviesLayout = findViewById(R.id.no_movies_layout)
-        supportActionBar?.title = "@string/movies_to_watch"
-    }
-
     override fun onStart() {
         super.onStart()
         dataSource = LocalDataSource(application)
@@ -54,6 +48,14 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         compositeDisposable.clear()
+    }
+
+    private fun setupViews() {
+        moviesRecyclerView = findViewById(R.id.movies_recyclerview)
+        moviesRecyclerView.layoutManager = LinearLayoutManager(this)
+        fab = findViewById(R.id.fab)
+        noMoviesLayout = findViewById(R.id.no_movies_layout)
+        supportActionBar?.title = "@string/movies_to_watch"
     }
 
     private fun getMyMoviesList() {
@@ -94,6 +96,12 @@ class MainActivity : AppCompatActivity() {
             moviesRecyclerView.visibility = VISIBLE
             noMoviesLayout.visibility = INVISIBLE
         }
+    }
+
+    //fab onClick
+    fun goToAddMovieActivity(v: View) {
+        val myIntent = Intent(this@MainActivity, AddMovieActivity::class.java)
+        startActivityForResult(myIntent, ADD_MOVIE_ACTIVITY_REQUEST_CODE)
     }
 
     fun showToast(str: String) {
