@@ -117,9 +117,9 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_MOVIE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            showToast("Movie successfully added.")
+            showToast("Фильм успешно добавлен")
         } else {
-            displayError("Movie could not be added.")
+            displayError("Не удалось добавить фильм")
         }
     }
 
@@ -136,9 +136,9 @@ class MainActivity : AppCompatActivity() {
                     dataSource.delete(movie)
                 }
                 if (adapter.selectedMovies.size == 1) {
-                    showToast("Movie deleted")
+                    showToast("Фильм удален")
                 } else if (adapter.selectedMovies.size > 1) {
-                    showToast("Movies deleted")
+                    showToast("Фильмы удалены")
                 }
             }
         }
