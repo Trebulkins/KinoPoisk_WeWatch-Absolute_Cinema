@@ -23,8 +23,8 @@ class SearchAdapter(var movieList: List<Movie>, var context: Context, var listen
   }
 
   override fun onBindViewHolder(holder: SearchMoviesHolder, position: Int) {
-
     holder.titleTextView.text = movieList[position].nameRu
+    holder.originalTitleTextView.text = movieList[position].nameOriginal
     holder.releaseDateTextView.text = movieList[position].year.toString()
 
     if (movieList[position].posterUrl != null) {
@@ -41,9 +41,8 @@ class SearchAdapter(var movieList: List<Movie>, var context: Context, var listen
   }
 
   inner class SearchMoviesHolder(v: View) : RecyclerView.ViewHolder(v) {
-
     var titleTextView: TextView = v.findViewById(R.id.title_textview)
-    var overviewTextView: TextView = v.findViewById(R.id.overview_overview)
+    var originalTitleTextView: TextView = v.findViewById(R.id.original_title_textview)
     var releaseDateTextView: TextView = v.findViewById(R.id.release_date_textview)
     var movieImageView: ImageView = v.findViewById(R.id.movie_imageview)
 

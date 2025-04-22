@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.absolute_cinema_wewatch.api.RetrofitClient.TMDB_BASE_URL
@@ -45,7 +46,7 @@ open class AddMovieActivity : AppCompatActivity() {
     //addMovie onClick
     fun onClickAddMovie(v: View) {
         if (TextUtils.isEmpty(titleEditText.text)) {
-            showToast("Movie title cannot be empty")
+            showToast("Название фильма не может быть пустым!")
         } else {
             val title = titleEditText.text.toString()
             val releaseDate = releaseDateEditText.text.toString()
@@ -63,10 +64,10 @@ open class AddMovieActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         this@AddMovieActivity.runOnUiThread {
-            titleEditText.setText(data?.getStringExtra(SearchActivity.EXTRA_TITLE))
+            titleEditText.setText(data?.getStringExtra(SearchActivity.EXTRA_TITLE)?:data?.getStringExtra(SearchActivity.EXTRA_ORIGINAL_TITLE))
             releaseDateEditText.setText(data?.getStringExtra(SearchActivity.EXTRA_RELEASE_DATE))
             movieImageView.tag = data?.getStringExtra(SearchActivity.EXTRA_POSTER_PATH)
-            Picasso.get().load(TMDB_BASE_URL + data?.getStringExtra(SearchActivity.`EXTRA_POSTER_PATH`)).into(movieImageView)
+            Picasso.get().load(TMDB_BASE_URL + data?.getStringExtra(SearchActivity.EXTRA_POSTER_PATH)).into(movieImageView)
         }
     }
 

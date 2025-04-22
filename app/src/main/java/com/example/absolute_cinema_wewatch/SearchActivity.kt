@@ -115,9 +115,9 @@ class SearchActivity : AppCompatActivity() {
     }
 
     companion object {
-
         val SEARCH_QUERY = "searchQuery"
         val EXTRA_TITLE = "SearchActivity.TITLE_REPLY"
+        val EXTRA_ORIGINAL_TITLE = "SearchActivity.ORIGINAL_TITLE_REPLY"
         val EXTRA_RELEASE_DATE = "SearchActivity.RELEASE_DATE_REPLY"
         val EXTRA_POSTER_PATH = "SearchActivity.POSTER_PATH_REPLY"
     }
@@ -131,6 +131,7 @@ class SearchActivity : AppCompatActivity() {
 
             val replyIntent = Intent()
             replyIntent.putExtra(EXTRA_TITLE, movie.nameRu)
+            replyIntent.putExtra(EXTRA_ORIGINAL_TITLE, movie.nameOriginal)
             replyIntent.putExtra(EXTRA_RELEASE_DATE, movie.year.toString())
             replyIntent.putExtra(EXTRA_POSTER_PATH, movie.posterUrl)
             setResult(Activity.RESULT_OK, replyIntent)
@@ -140,7 +141,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     interface RecyclerItemListener {
-        fun onItemClick(v: View, position: Int)
+        fun onItemClick(view: View, position: Int)
     }
 
 }

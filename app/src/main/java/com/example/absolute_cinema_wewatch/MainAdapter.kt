@@ -23,7 +23,7 @@ class MainAdapter(internal var movieList: List<Movie>, internal var context: Con
     }
 
     override fun onBindViewHolder(holder: MoviesHolder, position: Int) {
-        holder.titleTextView.text = movieList[position].nameRu
+        holder.titleTextView.text = movieList[position].nameRu?:movieList[position].nameOriginal
         holder.releaseDateTextView.text = movieList[position].year.toString()
         if (movieList[position].posterUrl.equals("")) {
             holder.movieImageView.setImageDrawable(context.getDrawable(R.drawable.ic_local_movies_gray))
@@ -37,7 +37,6 @@ class MainAdapter(internal var movieList: List<Movie>, internal var context: Con
     }
 
     inner class MoviesHolder(v: View) : RecyclerView.ViewHolder(v) {
-
         internal var titleTextView: TextView
         internal var releaseDateTextView: TextView
         internal var movieImageView: ImageView
