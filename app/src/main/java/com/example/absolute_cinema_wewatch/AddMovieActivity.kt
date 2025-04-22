@@ -1,6 +1,5 @@
 package com.example.absolute_cinema_wewatch
 
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +9,9 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.absolute_cinema_wewatch.api.RetrofitClient.TMDB_BASE_URL
 import com.example.absolute_cinema_wewatch.database.LocalDataSource
 import com.example.absolute_cinema_wewatch.database.Movie
-import com.example.absolute_cinema_wewatch.api.RetrofitClient.TMDB_BASE_URL
 
 import com.squareup.picasso.Picasso
 
