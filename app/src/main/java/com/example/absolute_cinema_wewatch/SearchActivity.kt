@@ -13,16 +13,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.absolute_cinema_wewatch.api.KinoResponse
 import com.example.absolute_cinema_wewatch.database.RemoteDataSource
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-
 import io.reactivex.annotations.NonNull
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-
-//const val SEARCH_QUERY = "searchQuery"
 
 class SearchActivity : AppCompatActivity() {
     private val TAG = "SearchActivity"
@@ -71,12 +69,12 @@ class SearchActivity : AppCompatActivity() {
         compositeDisposable.add(searchResultsDisposable)
     }
 
-    val searchResultsObservable: (String) -> Observable<TmdbResponse> = { query -> dataSource.searchResultsObservable(query) }
+    val searchResultsObservable: (String) -> Observable<KinoResponse> = { query -> dataSource.searchResultsObservable(query) }
 
-    val observer: DisposableObserver<TmdbResponse>
-        get() = object : DisposableObserver<TmdbResponse>() {
+    val observer: DisposableObserver<KinoResponse>
+        get() = object : DisposableObserver<KinoResponse>() {
 
-            override fun onNext(@NonNull tmdbResponse: TmdbResponse) {
+            override fun onNext(@NonNull tmdbResponse: KinoResponse) {
                 Log.d(TAG, "OnNext" + tmdbResponse.totalResults)
                 displayResult(tmdbResponse)
             }
@@ -92,7 +90,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-    fun displayResult(tmdbResponse: TmdbResponse) {
+    fun displayResult(tmdbResponse: KinoResponse) {
         progressBar.visibility = INVISIBLE
 
         if (tmdbResponse.totalResults == null || tmdbResponse.totalResults == 0) {
