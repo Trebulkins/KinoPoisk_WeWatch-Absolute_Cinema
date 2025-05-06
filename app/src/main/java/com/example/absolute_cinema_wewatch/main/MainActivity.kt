@@ -19,13 +19,6 @@ import com.example.absolute_cinema_wewatch.add.AddMovieActivity
 import com.example.absolute_cinema_wewatch.database.LocalDataSource
 import com.example.absolute_cinema_wewatch.database.Movie
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-
-import io.reactivex.annotations.NonNull
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     private lateinit var moviesRecyclerView: RecyclerView
@@ -36,6 +29,12 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     private lateinit var dataSource: LocalDataSource
 
     private val TAG = "MainActivity"
+
+    private lateinit var mainPresenter: MainContract.PresenterInterface
+    private fun setupPresenter() {
+        val dataSource = LocalDataSource(application)
+        mainPresenter = MainPresenter(this, dataSource)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,20 +59,6 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         fab = findViewById(R.id.fab)
         noMoviesLayout = findViewById(R.id.no_movies_layout)
         supportActionBar?.title = "Movies to Watch"
-    }
-
-    //1
-    override fun displayMovies(movieList: List<Movie>) {
-        adapter!!.movieList = movieList
-        adapter!!.notifyDataSetChanged()
-        moviesRecyclerView.visibility = VISIBLE
-        noMoviesLayout.visibility = INVISIBLE
-    }
-    //2
-    override fun displayNoMovies() {
-        Log.d(TAG, "No movies to display.")
-        moviesRecyclerView.visibility = INVISIBLE
-        noMoviesLayout.visibility = VISIBLE
     }
 
     //fab onClick
@@ -114,18 +99,30 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         return super.onOptionsItemSelected(item)
     }
 
-    private lateinit var mainPresenter: MainContract.PresenterInterface
-    private fun setupPresenter() {
-        val dataSource = LocalDataSource(application)
-        mainPresenter = MainPresenter(this, dataSource)
+
+    //1
+    override fun displayMovies(movieList: List<Movie>) {
+        val adapter = this.adapter
+        if (adapter != null) {
+            adapter.movieList = movieList
+            adapter.notifyDataSetChanged()
+            moviesRecyclerView.visibility = VISIBLE
+            noMoviesLayout.visibility = INVISIBLE
+        }
+    }
+    //2
+    override fun displayNoMovies() {
+        Log.d(TAG, "No movies to display.")
+        moviesRecyclerView.visibility = INVISIBLE
+        noMoviesLayout.visibility = VISIBLE
     }
 
-    override fun showToast(str: String) {
-        Toast.makeText(this@MainActivity, str, Toast.LENGTH_LONG).show()
+    override fun showToast(message: String) {
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun displayError(e: String) {
-        showToast(e)
+    override fun displayError(message: String) {
+        showToast(message)
     }
 
     companion object {

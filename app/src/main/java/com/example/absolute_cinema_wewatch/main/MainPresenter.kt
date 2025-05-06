@@ -1,7 +1,6 @@
 package com.example.absolute_cinema_wewatch.main
 
 import android.util.Log
-import androidx.annotation.NonNull
 import com.example.absolute_cinema_wewatch.database.LocalDataSource
 import com.example.absolute_cinema_wewatch.database.Movie
 import io.reactivex.Observable
@@ -32,7 +31,7 @@ class MainPresenter(
                 }
             }
 
-            override fun onError(@NonNull e: Throwable) {
+            override fun onError(e: Throwable) {
                 Log.d(TAG, "Error fetching movie list.", e)
                 viewInterface.displayError("Error fetching movie list.")
             }
