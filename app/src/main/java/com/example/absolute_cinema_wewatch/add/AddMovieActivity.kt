@@ -51,20 +51,12 @@ class AddMovieActivity : AppCompatActivity (), AddContract.ViewInterface {
     }
 
     //addMovie onClick
-    fun onClickAddMovie(v: View) {
-        if (TextUtils.isEmpty(titleEditText.text)) {
-            displayMessage("Название фильма не может быть пустым!")
-        } else {
-            val title = titleEditText.text.toString()
-            val releaseDate = releaseDateEditText.text.toString()
-            val posterPath = if (movieImageView.tag != null) movieImageView.tag.toString() else ""
-
-            val movie = Movie(nameRu = title, year = releaseDate.toInt(), posterUrl = posterPath)
-            dataSource.insert(movie)
-
-            setResult(Activity.RESULT_OK)
-            finish()
-        }
+    fun onClickAddMovie (view: View) {
+        val title = titleEditText.text.toString()
+        val year = releaseDateEditText.text.toString()
+        val posterPath = if (movieImageView.tag != null)
+            movieImageView.tag.toString() else ""
+        addMoviePresenter.addMovie (title, year, posterPath)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
