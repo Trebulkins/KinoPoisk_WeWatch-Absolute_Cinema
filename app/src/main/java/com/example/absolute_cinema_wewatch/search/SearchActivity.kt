@@ -23,7 +23,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
     private val TAG = "SearchActivity"
     private lateinit var searchResultsRecyclerView: RecyclerView
     private lateinit var adapter: SearchAdapter
@@ -31,8 +31,11 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private var query = ""
 
-    private var dataSource = RemoteDataSource()
-    private val compositeDisposable = CompositeDisposable()
+    private lateinit var searchPresenter: SearchPresenter
+    private fun setupPresenter() {
+        val dataSource = RemoteDataSource()
+        searchPresenter = SearchPresenter(this, dataSource)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,61 +47,32 @@ class SearchActivity : AppCompatActivity() {
         val i = intent
         query = i.getStringExtra(SEARCH_QUERY) ?: ""
         setupViews()
+        setupPresenter()
     }
 
     override fun onStart() {
         super.onStart()
         progressBar.visibility = VISIBLE
-        getSearchResults(query)
+        searchPresenter.getSearchResults(query)
     }
 
     override fun onStop() {
         super.onStop()
-        compositeDisposable.clear()
+        searchPresenter.stop()
     }
 
     private fun setupViews() {
         searchResultsRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-    fun getSearchResults(query: String) {
-        val searchResultsDisposable = searchResultsObservable(query)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(observer)
-
-        compositeDisposable.add(searchResultsDisposable)
-    }
-
-    val searchResultsObservable: (String) -> Observable<KinoResponse> = { query -> dataSource.searchResultsObservable(query) }
-
-    val observer: DisposableObserver<KinoResponse>
-        get() = object : DisposableObserver<KinoResponse>() {
-
-            override fun onNext(@NonNull tmdbResponse: KinoResponse) {
-                Log.d(TAG, "OnNext" + tmdbResponse.totalResults)
-                displayResult(tmdbResponse)
-            }
-
-            override fun onError(@NonNull e: Throwable) {
-                Log.d(TAG, "Error$e")
-                e.printStackTrace()
-                displayError("Error fetching Movie Data")
-            }
-
-            override fun onComplete() {
-                Log.d(TAG, "Completed")
-            }
-        }
-
-    fun displayResult(tmdbResponse: KinoResponse) {
+    override fun displayResult(kinoResponse: KinoResponse) {
         progressBar.visibility = INVISIBLE
 
-        if (tmdbResponse.totalResults == null || tmdbResponse.totalResults == 0) {
+        if (kinoResponse.totalResults == null || kinoResponse.totalResults == 0) {
             searchResultsRecyclerView.visibility = INVISIBLE
             noMoviesTextView.visibility = VISIBLE
         } else {
-            adapter = SearchAdapter(tmdbResponse.results
+            adapter = SearchAdapter(kinoResponse.results
                 ?: arrayListOf(), this@SearchActivity, itemListener)
             searchResultsRecyclerView.adapter = adapter
 
@@ -107,12 +81,12 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    fun showToast(string: String) {
-        Toast.makeText(this@SearchActivity, string, Toast.LENGTH_LONG).show()
+    override fun displayMessage(message: String) {
+        Toast.makeText(this@SearchActivity, message, Toast.LENGTH_LONG).show()
     }
 
-    fun displayError(string: String) {
-        showToast(string)
+    override fun displayError(message: String) {
+        displayMessage(message)
     }
 
     companion object {

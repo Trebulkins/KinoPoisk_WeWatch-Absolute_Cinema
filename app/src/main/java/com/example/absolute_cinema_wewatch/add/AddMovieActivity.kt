@@ -80,7 +80,8 @@ class AddMovieActivity : AppCompatActivity (), AddContract.ViewInterface {
     }
 
     override fun returnToMain() {
-        TODO("Not yet implemented")
+        setResult(Activity.RESULT_OK)
+        finish()
     }
     override fun displayError(message: String) {
         displayMessage(message)

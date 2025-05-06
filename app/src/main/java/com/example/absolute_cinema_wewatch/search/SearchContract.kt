@@ -1,11 +1,15 @@
 package com.example.absolute_cinema_wewatch.search
 
+import com.example.absolute_cinema_wewatch.api.KinoResponse
+
 class SearchContract {
     interface PresenterInterface {
-        //TODO: добавить методы интерфейса для Presenter
+        fun getSearchResults(query: String)
+        fun stop()
     }
-
     interface ViewInterface {
-        //TODO: добавить методы интерфейса для View
+        fun displayResult(kinoResponse: KinoResponse)
+        fun displayMessage(message: String)
+        fun displayError(message: String)
     }
 }

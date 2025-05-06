@@ -22,11 +22,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     private lateinit var moviesRecyclerView: RecyclerView
-    private var adapter: MainAdapter? = null
+    private lateinit var adapter: MainAdapter
     private lateinit var fab: FloatingActionButton
     private lateinit var noMoviesLayout: LinearLayout
-
-    private lateinit var dataSource: LocalDataSource
 
     private val TAG = "MainActivity"
 
@@ -88,16 +86,12 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         return super.onOptionsItemSelected(item)
     }
 
-
     //1
     override fun displayMovies(movieList: List<Movie>) {
-        val adapter = this.adapter
-        if (adapter != null) {
-            adapter.movieList = movieList
-            adapter.notifyDataSetChanged()
-            moviesRecyclerView.visibility = VISIBLE
-            noMoviesLayout.visibility = INVISIBLE
-        }
+        adapter.movieList = movieList
+        adapter.notifyDataSetChanged()
+        moviesRecyclerView.visibility = VISIBLE
+        noMoviesLayout.visibility = INVISIBLE
     }
     //2
     override fun displayNoMovies() {
