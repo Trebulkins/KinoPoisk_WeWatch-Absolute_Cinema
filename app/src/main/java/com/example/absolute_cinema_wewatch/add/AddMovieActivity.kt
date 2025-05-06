@@ -17,17 +17,23 @@ import com.example.absolute_cinema_wewatch.search.SearchActivity
 
 import com.squareup.picasso.Picasso
 
-open class AddMovieActivity : AppCompatActivity() {
+class AddMovieActivity : AppCompatActivity (), AddContract.ViewInterface {
     private lateinit var titleEditText: EditText
     private lateinit var releaseDateEditText: EditText
     private lateinit var movieImageView: ImageView
     private lateinit var dataSource: LocalDataSource
 
+    private lateinit var addMoviePresenter: AddPresenter
+    fun setupPresenter() {
+        val dataSource = LocalDataSource(application)
+        addMoviePresenter = AddPresenter(this, dataSource)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_movie)
         setupViews()
-        dataSource = LocalDataSource(application)
+        setupPresenter()
     }
 
     fun setupViews() {
@@ -47,7 +53,7 @@ open class AddMovieActivity : AppCompatActivity() {
     //addMovie onClick
     fun onClickAddMovie(v: View) {
         if (TextUtils.isEmpty(titleEditText.text)) {
-            showToast("Название фильма не может быть пустым!")
+            displayMessage("Название фильма не может быть пустым!")
         } else {
             val title = titleEditText.text.toString()
             val releaseDate = releaseDateEditText.text.toString()
@@ -73,11 +79,18 @@ open class AddMovieActivity : AppCompatActivity() {
         }
     }
 
-    fun showToast(string: String) {
-        Toast.makeText(this@AddMovieActivity, string, Toast.LENGTH_LONG).show()
+    override fun displayMessage(message: String) {
+        Toast.makeText(this@AddMovieActivity, message, Toast.LENGTH_LONG).show()
     }
 
     companion object {
         const val SEARCH_MOVIE_ACTIVITY_REQUEST_CODE = 2
+    }
+
+    override fun returnToMain() {
+        TODO("Not yet implemented")
+    }
+    override fun displayError(message: String) {
+        displayMessage(message)
     }
 }

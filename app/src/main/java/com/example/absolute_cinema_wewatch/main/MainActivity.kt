@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_MOVIE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            showToast("Фильм успешно добавлен")
+            displayMessage("Фильм успешно добавлен")
         } else {
             displayError("Не удалось добавить фильм")
         }
@@ -83,19 +83,8 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.deleteMenuItem) {
-            val adapter = this.adapter
-            if (adapter != null) {
-                for (movie in adapter.selectedMovies) {
-                    dataSource.delete(movie)
-                }
-                if (adapter.selectedMovies.size == 1) {
-                    showToast("Фильм удален")
-                } else if (adapter.selectedMovies.size > 1) {
-                    showToast("Фильмы удалены")
-                }
-            }
+            mainPresenter.onDeleteTapped(adapter!!.selectedMovies)
         }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -117,12 +106,12 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         noMoviesLayout.visibility = VISIBLE
     }
 
-    override fun showToast(message: String) {
+    override fun displayMessage(message: String) {
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
     }
 
     override fun displayError(message: String) {
-        showToast(message)
+        displayMessage(message)
     }
 
     companion object {

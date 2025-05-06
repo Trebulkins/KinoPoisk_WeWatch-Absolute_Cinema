@@ -50,6 +50,17 @@ class MainPresenter(
         compositeDisposable.add(myMoviesDisposable)
     }
 
+    override fun onDeleteTapped(selectedMovies: HashSet<*>) {
+        for (movie in selectedMovies) {
+            dataSource.delete(movie as Movie)
+        }
+        if (selectedMovies.size == 1) {
+            viewInterface.displayMessage("Movie deleted")
+        } else if (selectedMovies.size > 1) {
+            viewInterface.displayMessage("Movies deleted")
+        }
+    }
+
     override fun stop() {
         compositeDisposable.clear()
     }

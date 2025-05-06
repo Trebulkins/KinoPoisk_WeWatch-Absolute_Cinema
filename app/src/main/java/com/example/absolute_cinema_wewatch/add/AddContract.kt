@@ -2,10 +2,12 @@ package com.example.absolute_cinema_wewatch.add
 
 class AddContract {
     interface PresenterInterface {
-        //TODO: добавить методы интерфейса для Presenter
+        fun addMovie (title: String , releaseDate: String , posterPath: String )
     }
 
     interface ViewInterface {
-        //TODO: добавить методы интерфейса для View
+        fun returnToMain ()
+        fun displayMessage (message: String)
+        fun displayError (message: String)
     }
 }

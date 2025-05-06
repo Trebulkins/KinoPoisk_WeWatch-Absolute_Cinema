@@ -6,11 +6,12 @@ class MainContract {
     interface PresenterInterface {
         fun getMyMoviesList ()
         fun stop ()
+        fun onDeleteTapped(selectedMovies: HashSet<*>)
     }
     interface ViewInterface {
         fun displayMovies (movieList: List <Movie>)
         fun displayNoMovies ()
-        fun showToast (message: String)
+        fun displayMessage (message: String)
         fun displayError (message: String)
     }
 }
