@@ -1,4 +1,4 @@
-package com.example.absolute_cinema_wewatch
+package com.example.absolute_cinema_wewatch.main
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.absolute_cinema_wewatch.R
 import com.example.absolute_cinema_wewatch.api.RetrofitClient
 import com.example.absolute_cinema_wewatch.database.Movie
 import com.squareup.picasso.Picasso

@@ -1,4 +1,4 @@
-package com.example.absolute_cinema_wewatch
+package com.example.absolute_cinema_wewatch.search
 
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.absolute_cinema_wewatch.R
 import com.example.absolute_cinema_wewatch.api.KinoResponse
 import com.example.absolute_cinema_wewatch.database.RemoteDataSource
 import io.reactivex.Observable

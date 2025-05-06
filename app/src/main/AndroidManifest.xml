@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Absolute_CinemaКинопоиск_WeWatch"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AddMovieActivity"
+        <activity android:name=".add.AddMovieActivity"
             android:label="Add Movie">
         </activity>
 
-        <activity android:name=".SearchActivity"
+        <activity android:name=".search.SearchActivity"
             android:label="Search Results">
         </activity>
     </application>

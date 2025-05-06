@@ -1,4 +1,4 @@
-package com.example.absolute_cinema_wewatch
+package com.example.absolute_cinema_wewatch.main
 
 import android.app.Activity
 import android.content.Intent
@@ -14,6 +14,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.absolute_cinema_wewatch.R
+import com.example.absolute_cinema_wewatch.add.AddMovieActivity
 import com.example.absolute_cinema_wewatch.database.LocalDataSource
 import com.example.absolute_cinema_wewatch.database.Movie
 import com.google.android.material.floatingactionbutton.FloatingActionButton

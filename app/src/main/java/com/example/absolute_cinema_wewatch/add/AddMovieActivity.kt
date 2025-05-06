@@ -1,4 +1,4 @@
-package com.example.absolute_cinema_wewatch
+package com.example.absolute_cinema_wewatch.add
 
 import android.app.Activity
 import android.content.Intent
@@ -7,12 +7,13 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.absolute_cinema_wewatch.R
 import com.example.absolute_cinema_wewatch.api.RetrofitClient.TMDB_BASE_URL
 import com.example.absolute_cinema_wewatch.database.LocalDataSource
 import com.example.absolute_cinema_wewatch.database.Movie
+import com.example.absolute_cinema_wewatch.search.SearchActivity
 
 import com.squareup.picasso.Picasso
 
@@ -64,7 +65,8 @@ open class AddMovieActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         this@AddMovieActivity.runOnUiThread {
-            titleEditText.setText(data?.getStringExtra(SearchActivity.EXTRA_TITLE)?:data?.getStringExtra(SearchActivity.EXTRA_ORIGINAL_TITLE))
+            titleEditText.setText(data?.getStringExtra(SearchActivity.EXTRA_TITLE)?:data?.getStringExtra(
+                SearchActivity.EXTRA_ORIGINAL_TITLE))
             releaseDateEditText.setText(data?.getStringExtra(SearchActivity.EXTRA_RELEASE_DATE))
             movieImageView.tag = data?.getStringExtra(SearchActivity.EXTRA_POSTER_PATH)
             Picasso.get().load(TMDB_BASE_URL + data?.getStringExtra(SearchActivity.EXTRA_POSTER_PATH)).into(movieImageView)
