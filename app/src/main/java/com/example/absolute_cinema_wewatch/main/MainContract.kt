@@ -1,11 +1,17 @@
 package com.example.absolute_cinema_wewatch.main
 
+import com.example.absolute_cinema_wewatch.database.Movie
+
 class MainContract {
     interface PresenterInterface {
-        //TODO: добавить методы интерфейса для Presenter
+        fun getMyMoviesList()
+        fun stop()
     }
 
     interface ViewInterface {
-        //TODO: добавить методы интерфейса для View
+        fun displayMovies (movieList: List <Movie>)
+        fun displayNoMovies ()
+        fun showToast (message: String)
+        fun displayError (message: String)
     }
 }

@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     private lateinit var noMoviesLayout: LinearLayout
 
     private lateinit var dataSource: LocalDataSource
-    private val compositeDisposable = CompositeDisposable()
 
     private val TAG = "MainActivity"
 
@@ -47,13 +46,12 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
 
     override fun onStart() {
         super.onStart()
-        dataSource = LocalDataSource(application)
-        getMyMoviesList()
+        mainPresenter.getMyMoviesList()
     }
 
     override fun onStop() {
         super.onStop()
-        compositeDisposable.clear()
+        mainPresenter.stop()
     }
 
     private fun setupViews() {
@@ -64,49 +62,18 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         supportActionBar?.title = "Movies to Watch"
     }
 
-    private fun getMyMoviesList() {
-        val myMoviesDisposable = myMoviesObservable
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(observer)
-
-        compositeDisposable.add(myMoviesDisposable)
+    //1
+    override fun displayMovies(movieList: List<Movie>) {
+        adapter!!.movieList = movieList
+        adapter!!.notifyDataSetChanged()
+        moviesRecyclerView.visibility = VISIBLE
+        noMoviesLayout.visibility = INVISIBLE
     }
-
-    private val myMoviesObservable: Observable<List<Movie>>
-        get() = dataSource.allMovies
-
-
-    private val observer: DisposableObserver<List<Movie>>
-        get() = object : DisposableObserver<List<Movie>>() {
-
-            override fun onNext(movieList: List<Movie>) {
-                displayMovies(movieList)
-            }
-
-            override fun onError(@NonNull e: Throwable) {
-                Log.d(TAG, "Error$e")
-                e.printStackTrace()
-                displayError("Error fetching movie list")
-            }
-
-            override fun onComplete() {
-                Log.d(TAG, "Completed")
-            }
-        }
-
-    fun displayMovies(movieList: List<Movie>?) {
-        if (movieList == null || movieList.size == 0) {
-            Log.d(TAG, "No movies to display")
-            moviesRecyclerView.visibility = INVISIBLE
-            noMoviesLayout.visibility = VISIBLE
-        } else {
-            adapter = MainAdapter(movieList, this@MainActivity)
-            moviesRecyclerView.adapter = adapter
-
-            moviesRecyclerView.visibility = VISIBLE
-            noMoviesLayout.visibility = INVISIBLE
-        }
+    //2
+    override fun displayNoMovies() {
+        Log.d(TAG, "No movies to display.")
+        moviesRecyclerView.visibility = INVISIBLE
+        noMoviesLayout.visibility = VISIBLE
     }
 
     //fab onClick
@@ -153,11 +120,11 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         mainPresenter = MainPresenter(this, dataSource)
     }
 
-    fun showToast(str: String) {
+    override fun showToast(str: String) {
         Toast.makeText(this@MainActivity, str, Toast.LENGTH_LONG).show()
     }
 
-    fun displayError(e: String) {
+    override fun displayError(e: String) {
         showToast(e)
     }
 
