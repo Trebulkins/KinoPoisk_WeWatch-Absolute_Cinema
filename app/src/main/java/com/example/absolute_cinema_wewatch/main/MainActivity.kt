@@ -81,23 +81,9 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.deleteMenuItem) {
-            mainPresenter.onDeleteTapped(adapter!!.selectedMovies)
+            mainPresenter.onDeleteTapped(adapter.selectedMovies)
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    //1
-    override fun displayMovies(movieList: List<Movie>) {
-        adapter.movieList = movieList
-        adapter.notifyDataSetChanged()
-        moviesRecyclerView.visibility = VISIBLE
-        noMoviesLayout.visibility = INVISIBLE
-    }
-    //2
-    override fun displayNoMovies() {
-        Log.d(TAG, "No movies to display.")
-        moviesRecyclerView.visibility = INVISIBLE
-        noMoviesLayout.visibility = VISIBLE
     }
 
     override fun displayMessage(message: String) {
@@ -112,4 +98,18 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         const val ADD_MOVIE_ACTIVITY_REQUEST_CODE = 1
     }
 
+    //1
+    override fun displayMovies(movieList: List<Movie>) {
+        adapter = MainAdapter(movieList, this@MainActivity)
+        moviesRecyclerView.adapter = adapter
+
+        moviesRecyclerView.visibility = VISIBLE
+        noMoviesLayout.visibility = INVISIBLE
+    }
+    //2
+    override fun displayNoMovies() {
+        Log.d(TAG, "No movies to display.")
+        moviesRecyclerView.visibility = INVISIBLE
+        noMoviesLayout.visibility = VISIBLE
+    }
 }

@@ -54,8 +54,7 @@ class AddMovieActivity : AppCompatActivity (), AddContract.ViewInterface {
     fun onClickAddMovie (view: View) {
         val title = titleEditText.text.toString()
         val year = releaseDateEditText.text.toString()
-        val posterPath = if (movieImageView.tag != null)
-            movieImageView.tag.toString() else ""
+        val posterPath = if (movieImageView.tag != null) movieImageView.tag.toString() else ""
         addMoviePresenter.addMovie (title, year, posterPath)
     }
 

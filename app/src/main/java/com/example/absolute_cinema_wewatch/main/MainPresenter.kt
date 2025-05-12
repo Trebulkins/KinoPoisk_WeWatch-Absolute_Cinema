@@ -9,10 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
-class MainPresenter(
-    private var viewInterface: MainContract.ViewInterface,
-    private var dataSource: LocalDataSource
-): MainContract.PresenterInterface {
+class MainPresenter(private var viewInterface: MainContract.ViewInterface, private var dataSource: LocalDataSource): MainContract.PresenterInterface {
     private val TAG = "MainPresenter"
     private val compositeDisposable = CompositeDisposable()
 
@@ -22,7 +19,7 @@ class MainPresenter(
 
     //2
     val observer: DisposableObserver<List<Movie>>
-        get() = object : DisposableObserver<List<Movie>>() {
+        get() = object: DisposableObserver<List<Movie>>() {
             override fun onNext(movieList: List<Movie>) {
                 if (movieList.isEmpty()) {
                     viewInterface.displayNoMovies()
