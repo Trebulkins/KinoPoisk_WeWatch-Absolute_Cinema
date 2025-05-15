@@ -1,5 +1,6 @@
 package com.example.absolute_cinema_wewatch.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
@@ -11,6 +12,9 @@ import io.reactivex.Observable
 interface MovieDao {
   @get:Query("SELECT * FROM movie_table")
   val all: Observable<List<Movie>>
+
+  @Query("SELECT * FROM movie_table")
+  fun getAllMovies(): LiveData<List<Movie>>
 
   @Insert(onConflict = REPLACE)
   fun insert(movie: Movie)
