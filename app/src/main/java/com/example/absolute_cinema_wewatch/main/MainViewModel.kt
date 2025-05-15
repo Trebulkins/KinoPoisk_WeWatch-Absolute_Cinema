@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: MovieRepository
     val allMovies: LiveData<List<Movie>>
-    val searchResults = MutableLiveData<List<Movie>>()
 
     init {
         val movieDao = LocalDatabase.getInstance(application).movieDao()

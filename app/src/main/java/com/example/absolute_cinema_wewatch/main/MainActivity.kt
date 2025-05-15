@@ -12,6 +12,7 @@ import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.absolute_cinema_wewatch.R
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     private lateinit var adapter: MainAdapter
     private lateinit var fab: FloatingActionButton
     private lateinit var noMoviesLayout: LinearLayout
+    private lateinit var mainViewModel: MainViewModel
 
     private val TAG = "MainActivity"
 
@@ -39,6 +41,12 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
         setContentView(R.layout.activity_main)
         setupPresenter()
         setupViews()
+        // Инициализация ViewModel
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        // Подписка на изменения списка фильмов
+        mainViewModel.allMovies.observe(this) { films ->
+            films?.let { adapter.updateFilms(it) }
+        }
     }
 
     override fun onStart() {

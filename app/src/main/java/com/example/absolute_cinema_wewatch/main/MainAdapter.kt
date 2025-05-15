@@ -37,6 +37,11 @@ class MainAdapter(internal var movieList: List<Movie>, internal var context: Con
         return movieList.size
     }
 
+    fun updateFilms(newMovies: List<Movie>) {
+        movieList = newMovies
+        notifyDataSetChanged()
+    }
+
     inner class MoviesHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var titleTextView: TextView = v.findViewById(R.id.title_textview)
         internal var releaseDateTextView: TextView = v.findViewById(R.id.release_date_textview)
